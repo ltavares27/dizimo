@@ -20,6 +20,5 @@ public class PessoaService {
 
     public Pessoa findPessoaId(Integer id){
         return this.pessoaRepository.findPessoaById(id);
-
     }
 }

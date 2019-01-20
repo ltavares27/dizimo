@@ -28,5 +28,4 @@ public class DizimoService {
     public Dizimo findDizimoId(Integer id){
        return this.dizimoRepository.findDizimoById(id);
     }
-
 }

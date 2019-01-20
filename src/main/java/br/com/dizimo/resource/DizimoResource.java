@@ -37,22 +37,21 @@ public class DizimoResource {
         return ResponseEntity.badRequest().build();
     }
 
-    @PutMapping("/editar/{id}")
-    public ResponseEntity<Dizimo> editarDizimo(@RequestBody Dizimo newDizimo, @PathVariable Integer id){
-        Dizimo dizimoResponse = null;
-        if(newDizimo != null && id != null){
-            Dizimo oldDizimo = dizimoService.findDizimoId(id);
-            if(oldDizimo != null){
-               oldDizimo.setPessoa(newDizimo.getPessoa());
-               oldDizimo.setDataPagamento(new Date());
-               oldDizimo.setMes(newDizimo.getMes());
-               oldDizimo.setValor(newDizimo.getValor());
-               oldDizimo.setObservacao(newDizimo.getObservacao());
-               dizimoService.salvarDizimo(newDizimo);
-               if (dizimoResponse != null) {
-                   return ResponseEntity.ok(dizimoResponse);
-               }
-           }
+    @PutMapping("/update/{idDizimo}")
+    public ResponseEntity<String> editarDizimo(@RequestBody Dizimo DizimoAtual, @PathVariable Integer idDizimo){
+        if(idDizimo != null) {
+            Dizimo oldDizimo = dizimoService.findDizimoId(idDizimo);
+            if (oldDizimo != null) {
+                if (oldDizimo != null) {
+                    oldDizimo.setPessoa(DizimoAtual.getPessoa());
+                    oldDizimo.setDataPagamento(new Date());
+                    oldDizimo.setMes(DizimoAtual.getMes());
+                    oldDizimo.setValor(DizimoAtual.getValor());
+                    oldDizimo.setObservacao(DizimoAtual.getObservacao());
+                    dizimoService.salvarDizimo(DizimoAtual);
+                    return ResponseEntity.ok("Atualizado com Sucesso");
+                }
+            }
         }
         return ResponseEntity.badRequest().build();
     }
