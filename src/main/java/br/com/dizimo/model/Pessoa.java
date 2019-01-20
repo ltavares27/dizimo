@@ -27,7 +27,7 @@ public class Pessoa {
 
     private String telefone;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Endereco> enderecos;
 
     public Integer getId() {
