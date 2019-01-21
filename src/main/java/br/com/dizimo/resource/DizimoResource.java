@@ -4,12 +4,13 @@ import br.com.dizimo.model.Dizimo;
 import br.com.dizimo.service.DizimoService;
 import br.com.dizimo.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.util.List;
 
-@RequestMapping("/dizimo")
+@RequestMapping("/dizimos")
 @RestController
 public class DizimoResource {
 
@@ -24,7 +25,21 @@ public class DizimoResource {
         return ResponseEntity.ok("ok");
     }
 
-    @PostMapping("/save")
+    @GetMapping("/list") //READ
+    public ResponseEntity<List<?>> getListAllDizimo(){
+        return new ResponseEntity<>(this.dizimoService.getAllDizimos(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{idDizimo}") //READ
+    public ResponseEntity<Dizimo> getDizimiById(@PathVariable("idDizimo") Integer id) {
+        Dizimo dizimo = this.dizimoService.findDizimoId(id);
+        if(dizimo != null) {
+            return ResponseEntity.ok(dizimo);
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @PostMapping("/save") //CREATE
     public ResponseEntity<Dizimo> saveDizimo(@RequestBody Dizimo dizimo){
         Dizimo dizimoResponse = null;
         if(dizimo.getId() == null && dizimo.getPessoa().getId() != null){
@@ -37,28 +52,20 @@ public class DizimoResource {
         return ResponseEntity.badRequest().build();
     }
 
-    @PutMapping("/update/{idDizimo}")
-    public ResponseEntity<String> editarDizimo(@RequestBody Dizimo DizimoAtual, @PathVariable Integer idDizimo){
-        if(idDizimo != null) {
-            Dizimo oldDizimo = dizimoService.findDizimoId(idDizimo);
+    @PutMapping("/update/{idDizimo}") //UPDATE
+    public ResponseEntity<String> editarDizimo(@RequestBody Dizimo dizimoAtual, @PathVariable("idDizimo") Integer id){
+        if(id != null) {
+            Dizimo oldDizimo = dizimoService.findDizimoId(id);
             if (oldDizimo != null) {
-                if (oldDizimo != null) {
-                    oldDizimo.setPessoa(DizimoAtual.getPessoa());
-                    oldDizimo.setDataPagamento(new Date());
-                    oldDizimo.setMes(DizimoAtual.getMes());
-                    oldDizimo.setValor(DizimoAtual.getValor());
-                    oldDizimo.setObservacao(DizimoAtual.getObservacao());
-                    dizimoService.salvarDizimo(DizimoAtual);
-                    return ResponseEntity.ok("Atualizado com Sucesso");
-                }
+                dizimoService.editarDizimo(oldDizimo, dizimoAtual);
+                return ResponseEntity.ok("Atualizado com Sucesso");
             }
         }
         return ResponseEntity.badRequest().build();
     }
 
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deletarDizimo(@PathVariable("id") Integer id) {
+    @DeleteMapping("/delete/{idDizimo}") //DELETE
+    public ResponseEntity<?> deletarDizimo(@PathVariable("idDizimo") Integer id) {
         if(id != null) {
             Dizimo dizimo = dizimoService.findDizimoId(id);
             if(dizimo != null) {
