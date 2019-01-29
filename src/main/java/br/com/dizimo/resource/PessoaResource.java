@@ -59,7 +59,7 @@ public class PessoaResource  {
         return ResponseEntity.badRequest().build();
     }
 
-    @GetMapping("/List") //READ
+    @GetMapping("/list") //READ
     public ResponseEntity<List<?>> getListAllDizimo(){
         return new ResponseEntity<>(this.pessoaService.getAllPesssoas(), HttpStatus.OK);
     }

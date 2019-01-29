@@ -1,10 +1,11 @@
 package br.com.dizimo.service;
 
-import br.com.dizimo.model.Dizimo;
 import br.com.dizimo.model.Pessoa;
 import br.com.dizimo.repository.PessoaRepository;
+import org.hibernate.PersistentObjectException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class PessoaService {
     @Autowired
     private PessoaRepository pessoaRepository;
 
+    @Transactional(rollbackFor = PersistentObjectException.class)
     public Pessoa salvarPessoa(Pessoa pessoa){
         if(pessoa != null){
             return this.pessoaRepository.save(pessoa);
