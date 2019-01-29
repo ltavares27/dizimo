@@ -27,7 +27,7 @@ public class PessoaResource  {
     }
 
     @PostMapping("/save") //CREATE
-    public ResponseEntity<Pessoa> salvarPessao(@RequestBody Pessoa pessoa){
+    public ResponseEntity<Pessoa> salvarPessoa(@RequestBody Pessoa pessoa){
         Pessoa pessoaResponse = null;
         if(pessoa.getId() == null){
             pessoaResponse = pessoaService.salvarPessoa(pessoa);
