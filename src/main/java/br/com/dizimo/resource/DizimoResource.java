@@ -12,6 +12,7 @@ import java.util.List;
 
 @RequestMapping("/dizimos")
 @RestController
+@CrossOrigin
 public class DizimoResource {
 
     @Autowired

@@ -12,12 +12,13 @@ import java.util.List;
 
 @RequestMapping("/pessoas")
 @RestController
+@CrossOrigin
 public class PessoaResource  {
 
     @Autowired
     private PessoaService pessoaService;
 
-    @GetMapping("/get/{idPessoa}") //READ
+    @GetMapping("/pessoa/{idPessoa}") //READ
     public ResponseEntity<?> getPessoa(@PathVariable("idPessoa") Integer id) {
         if(id != null) {
             Pessoa pessoa = pessoaService.findPessoaId(id);

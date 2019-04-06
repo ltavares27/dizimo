@@ -1,4 +1,8 @@
 package br.com.dizimo.model;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
@@ -6,8 +10,11 @@ import javax.validation.constraints.Email;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Data
 @Entity
-@Table
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Pessoa {
 
     @Id
@@ -29,60 +36,4 @@ public class Pessoa {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Endereco> enderecos;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public LocalDateTime getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public void setDataNascimento(LocalDateTime dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public List<Endereco> getEnderecos() {
-        return enderecos;
-    }
-
-    public void setEnderecos(List<Endereco> enderecos) {
-        this.enderecos = enderecos;
-    }
 }
